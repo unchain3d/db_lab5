@@ -1,0 +1,11 @@
+DELIMITER //
+CREATE TRIGGER no_two_zeros
+BEFORE INSERT ON client
+FOR EACH ROW
+BEGIN
+	IF RIGHT(NEW.phone, 2) = '00' THEN
+		SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'The phone numbers cannot end with 00';
+	END IF;
+END;//
+DELIMITER ;
